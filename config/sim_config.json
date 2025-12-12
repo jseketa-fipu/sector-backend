@@ -1,0 +1,81 @@
+{
+  "num_systems": 40,
+  "lanes_per_system": 3,
+  "tick_delay": 0.05,
+  "min_launch_strength": 3.0,
+  "frontline_origin_bonus": 0.6,
+  "goal_path_bonus": 0.8,
+  "stagnation_ticks": 10,
+  "overextension_threshold": 15,
+  "overextension_risk_per_extra": 0.08,
+  "econ_overextension_penalty_per_extra": 0.04,
+  "econ_maturity_ticks": 15,
+  "econ_maturity_min_factor": 0.2,
+  "league_tech_bonus": 0.3,
+  "league_militia_strength": 6.0,
+  "colonizer_overextension_order_penalty": 0.1,
+  "colonizer_overextension_reserve_per_system": 1.5,
+  "capture_ticks": 3,
+  "min_capture_strength": 3.0,
+  "garrison_max_strength": 3.0,
+  "garrison_regen_per_tick": 0.2,
+  "colonizer_reserve_strength": 6.0,
+  "colonizer_strength_per_order": 3.0,
+  "special_systems": {
+    "relic": 2,
+    "forge": 2,
+    "hive": 1
+  },
+  "factions": {
+    "E": {
+      "name": "Empire",
+      "base_attempts": 4,
+      "personality": {
+        "aggression": 0.8,
+        "expansionism": 0.7,
+        "greed": 0.6,
+        "caution": 0.3
+      }
+    },
+    "P": {
+      "name": "Pirates",
+      "base_attempts": 3,
+      "personality": {
+        "aggression": 0.9,
+        "expansionism": 0.4,
+        "greed": 0.8,
+        "caution": 0.1
+      }
+    },
+    "T": {
+      "name": "Traders",
+      "base_attempts": 2,
+      "personality": {
+        "aggression": 0.3,
+        "expansionism": 0.5,
+        "greed": 0.9,
+        "caution": 0.6
+      }
+    },
+    "M": {
+      "name": "Mercenaries",
+      "base_attempts": 3,
+      "personality": {
+        "aggression": 0.6,
+        "expansionism": 0.6,
+        "greed": 0.7,
+        "caution": 0.4
+      }
+    },
+    "S": {
+      "name": "Synths",
+      "base_attempts": 3,
+      "personality": {
+        "aggression": 0.7,
+        "expansionism": 0.4,
+        "greed": 0.5,
+        "caution": 0.2
+      }
+    }
+  }
+}
