@@ -3,10 +3,18 @@ from __future__ import annotations
 
 import asyncio
 import json
+<<<<<<< HEAD
+=======
+import os
+>>>>>>> e548a32795d617efc2f519ef1e652103e3efb266
 import random
 from pathlib import Path
 import traceback
 import threading
+<<<<<<< HEAD
+=======
+from contextlib import asynccontextmanager
+>>>>>>> e548a32795d617efc2f519ef1e652103e3efb266
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
@@ -34,7 +42,29 @@ TICK_DELAY: float = float(SIM_CONFIG.get("tick_delay", 0.5))
 
 BASE_DIR = Path(__file__).resolve().parent
 
+<<<<<<< HEAD
 app = FastAPI()
+=======
+_simulation_task: asyncio.Task | None = None
+_online_training_task: asyncio.Task | None = None
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await _start_online_training()
+    await start_simulation()
+    try:
+        yield
+    finally:
+        tasks = [t for t in (_simulation_task, _online_training_task) if t]
+        for task in tasks:
+            task.cancel()
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
+
+
+app = FastAPI(lifespan=lifespan)
+>>>>>>> e548a32795d617efc2f519ef1e652103e3efb266
 
 print(">>> Starting sector_sim with TICK_DELAY =", TICK_DELAY)
 
@@ -170,9 +200,14 @@ def dump_run_history(history: list[dict], factions: dict, winner: str | None, en
     out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+<<<<<<< HEAD
 @app.on_event("startup")
 async def _start_online_training() -> None:
     global online_policy_manager
+=======
+async def _start_online_training() -> None:
+    global online_policy_manager, _online_training_task
+>>>>>>> e548a32795d617efc2f519ef1e652103e3efb266
     if not ONLINE_TRAIN_POLICY:
         return
     if torch is None:
@@ -189,7 +224,11 @@ async def _start_online_training() -> None:
 
     set_custom_order_fn(_order_fn)
     print("[online-train] Enabled online neural policy training.")
+<<<<<<< HEAD
     asyncio.create_task(_online_training_loop())
+=======
+    _online_training_task = asyncio.create_task(_online_training_loop())
+>>>>>>> e548a32795d617efc2f519ef1e652103e3efb266
 
 
 @app.get("/")
@@ -348,8 +387,13 @@ async def websocket_endpoint(ws: WebSocket):
         return
 
 
+<<<<<<< HEAD
 @app.on_event("startup")
 async def start_simulation():
+=======
+async def start_simulation() -> None:
+    global _simulation_task
+>>>>>>> e548a32795d617efc2f519ef1e652103e3efb266
     random.seed()
     print(">>> startup: simulation task starting")
 
@@ -448,4 +492,17 @@ async def start_simulation():
                 traceback.print_exc()
                 await asyncio.sleep(1.0)
 
+<<<<<<< HEAD
     asyncio.create_task(run())
+=======
+    _simulation_task = asyncio.create_task(run())
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    host = os.environ.get("HOST", "0.0.0.0")
+    port = int(os.environ.get("PORT", SIM_CONFIG.get("port", 8000)))
+    reload_flag = os.environ.get("RELOAD", "").lower() in {"1", "true", "yes", "on"}
+    uvicorn.run("main:app", host=host, port=port, reload=reload_flag)
+>>>>>>> e548a32795d617efc2f519ef1e652103e3efb266
