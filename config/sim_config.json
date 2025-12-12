@@ -1,7 +1,7 @@
 {
   "num_systems": 40,
   "lanes_per_system": 3,
-  "tick_delay": 0.5,
+  "tick_delay": 1,
   "min_launch_strength": 3.0,
   "frontline_origin_bonus": 0.6,
   "goal_path_bonus": 0.8,
